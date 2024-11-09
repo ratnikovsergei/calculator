@@ -24,7 +24,18 @@ export function App() {
   }
 
   const handleOperatorClick = (op) => {
-    setOperator(op)
+    if (op === 'C') {
+      setOperand1('')
+      setOperand2('')
+      setOperator('')
+      setResult(null)
+      setResultOnDisplay(false)
+    } else {
+      if (operand1 === '') {
+        setOperand1('0')
+      }
+      setOperator(op)
+    }
   }
 
   const handleResult = () => {
@@ -40,18 +51,13 @@ export function App() {
     }
   }
 
-  const handleReset = () => {
-    setOperand1('')
-    setOperand2('')
-    setOperator('')
-    setResult(null)
-    setResultOnDisplay(false)
-  }
-
   return (
     <div className={styles.calculator}>
       <h1>Калькулятор</h1>
-      <div className={styles.display}>
+      <div
+        className={styles.display}
+        style={{ color: resultOnDisplay ? 'green' : 'black' }}
+      >
         {resultOnDisplay ? result : `${operand1} ${operator} ${operand2}`}
       </div>
       <div className={styles.buttons}>
@@ -65,7 +71,7 @@ export function App() {
         <button onClick={() => handleOperatorClick('+')}>+</button>
         <button onClick={() => handleOperatorClick('-')}>-</button>
         <button onClick={handleResult}>=</button>
-        <button onClick={handleReset}>C</button>
+        <button onClick={() => handleOperatorClick('C')}>C</button>
       </div>
     </div>
   )
